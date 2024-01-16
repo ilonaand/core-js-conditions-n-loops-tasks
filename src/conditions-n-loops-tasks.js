@@ -92,8 +92,9 @@ function canQueenCaptureKing(queen, king) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b > c && a + c > b && b + c > a) return true;
+  return false;
 }
 
 /**
@@ -110,8 +111,48 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let rez = '';
+  const dec = Math.floor(num / 10);
+  if (dec > 0) {
+    for (let i = 0; i < dec; i += 1) {
+      rez += 'X';
+    }
+  }
+  const ost = num % 10;
+  switch (ost) {
+    case 1:
+      rez += 'I';
+      break;
+    case 2:
+      rez += 'II';
+      break;
+    case 3:
+      rez += 'III';
+      break;
+    case 4:
+      rez += 'IV';
+      break;
+    case 5:
+      rez += 'V';
+      break;
+    case 6:
+      rez += 'VI';
+      break;
+    case 7:
+      rez += 'VII';
+      break;
+    case 8:
+      rez += 'VIII';
+      break;
+    case 9:
+      rez += 'IX';
+      break;
+    default:
+      break;
+  }
+
+  return rez;
 }
 
 /**
@@ -129,8 +170,56 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let str = '';
+  const temp = `${numberStr}`;
+  for (let i = 0; i < temp.length; i += 1) {
+    if (str) str += ' ';
+    switch (temp[i]) {
+      case '1':
+        str += 'one';
+        break;
+      case '2':
+        str += 'two';
+        break;
+      case '3':
+        str += 'three';
+        break;
+      case '4':
+        str += 'four';
+        break;
+      case '5':
+        str += 'five';
+        break;
+      case '6':
+        str += 'six';
+        break;
+      case '7':
+        str += 'seven';
+        break;
+      case '8':
+        str += 'eight';
+        break;
+      case '9':
+        str += 'nine';
+        break;
+      case '0':
+        str += 'zero';
+        break;
+      case '.':
+        str += 'point';
+        break;
+      case ',':
+        str += 'point';
+        break;
+      case '-':
+        str += 'minus';
+        break;
+      default:
+        break;
+    }
+  }
+  return str;
 }
 
 /**
