@@ -401,8 +401,17 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const arrSort = arr;
+  for (let i = 0; i < arrSort.length; i += 1) {
+    for (let j = 0; j < arrSort.length - i; j += 1) {
+      if (arrSort[j] > arrSort[j + 1]) {
+        [arrSort[j], arrSort[j + 1]] = [arrSort[j + 1], arrSort[j]];
+      }
+    }
+  }
+
+  return arr;
 }
 
 /**
@@ -443,8 +452,76 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const arr = `${number}`;
+  let i = arr.length - 1;
+  let left = 0;
+  while (i > 0 && left === 0) {
+    if (arr[i - 1] < arr[i]) {
+      left = i - 1;
+    }
+    i -= 1;
+  }
+
+  const arrCut = [];
+  for (i = left; i < arr.length; i += 1) {
+    arrCut[i - left] = arr[i];
+  }
+
+  const leftCut = [];
+  for (i = 0; i < left; i += 1) {
+    leftCut[i] = arr[i];
+  }
+
+  const result = [];
+  const getCombinations = (a, memo = []) => {
+    let cur = [];
+    for (let z = 0; z < a.length; z += 1) {
+      cur = a.splice(z, 1);
+      if (a.length === 0) {
+        result.push([...memo, cur]);
+      }
+      getCombinations([...a], [...memo, cur]);
+      a.splice(z, 0, cur[0]);
+    }
+    return result;
+  };
+
+  const sort = (array) => {
+    if (array.length <= 1) {
+      return array;
+    }
+    let left1 = [];
+    let right1 = [];
+    const pivot = array[array.length - 1];
+
+    for (let p = 0; p < array.length - 1; p += 1) {
+      if (array[p] > pivot) {
+        right1 = [...right1, array[p]];
+      } else {
+        left1 = [...left1, array[p]];
+      }
+    }
+    return [...sort(left1), pivot, ...sort(right1)];
+  };
+
+  let comb = getCombinations(arrCut);
+  comb = sort(comb.map((item) => item.join('')));
+
+  let k = 0;
+  let num = 0;
+  while (k < comb.length && num === 0) {
+    if (
+      Number(leftCut.join('') + comb[k]) >
+      Number(leftCut.join('') + arrCut.join(''))
+    ) {
+      num = leftCut.join('') + comb[k];
+    }
+
+    k += 1;
+  }
+
+  return Number(num);
 }
 
 module.exports = {
