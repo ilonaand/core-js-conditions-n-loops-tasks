@@ -404,9 +404,10 @@ function rotateMatrix(matrix) {
 
 function swap(arr, firstIndex, secondIndex) {
   const items = arr;
-  const temp = items[firstIndex];
-  items[firstIndex] = items[secondIndex];
-  items[secondIndex] = temp;
+  [items[firstIndex], items[secondIndex]] = [
+    items[secondIndex],
+    items[firstIndex],
+  ];
 }
 
 function partition(items, left, right) {
