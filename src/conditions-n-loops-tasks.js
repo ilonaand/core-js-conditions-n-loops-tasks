@@ -402,15 +402,15 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 
-function swap(arr, firstIndex, secondIndex) {
+const swap = (arr, firstIndex, secondIndex) => {
   const items = arr;
   [items[firstIndex], items[secondIndex]] = [
     items[secondIndex],
     items[firstIndex],
   ];
-}
+};
 
-function partition(items, left, right) {
+const partition = (items, left, right) => {
   const pivot = items[Math.floor((right + left) / 2)];
   let i = left;
   let j = right;
@@ -428,7 +428,7 @@ function partition(items, left, right) {
     }
   }
   return i;
-}
+};
 
 function quickSort(items, left, right) {
   let index;
