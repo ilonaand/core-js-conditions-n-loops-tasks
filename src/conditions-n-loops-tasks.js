@@ -350,8 +350,32 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let k = 1;
+  const arr = [];
+  for (let i = 0; i < size; i += 1) {
+    arr[i] = [];
+  }
+
+  for (let i = 0; i < size - 1; i += 1) {
+    for (let j = i; j < size - i; j += 1) {
+      arr[i][j] = k;
+      k += 1;
+    }
+    for (let j = i + 1; j < size - i; j += 1) {
+      arr[j][size - i - 1] = k;
+      k += 1;
+    }
+    for (let j = size - i - 2; j >= i; j -= 1) {
+      arr[size - i - 1][j] = k;
+      k += 1;
+    }
+    for (let j = size - i - 2; j > i; j -= 1) {
+      arr[j][i] = k;
+      k += 1;
+    }
+  }
+  return arr;
 }
 
 /**
@@ -402,15 +426,8 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 
-const swap = (arr, firstIndex, secondIndex) => {
+const division = (arr, left, right) => {
   const items = arr;
-  [items[firstIndex], items[secondIndex]] = [
-    items[secondIndex],
-    items[firstIndex],
-  ];
-};
-
-const partition = (items, left, right) => {
   const pivot = items[Math.floor((right + left) / 2)];
   let i = left;
   let j = right;
@@ -422,7 +439,7 @@ const partition = (items, left, right) => {
       j -= 1;
     }
     if (i <= j) {
-      swap(items, i, j);
+      [items[i], items[j]] = [items[j], items[i]];
       i += 1;
       j -= 1;
     }
@@ -430,22 +447,22 @@ const partition = (items, left, right) => {
   return i;
 };
 
-function quickSort(items, left, right) {
+function sort(items, left, right) {
   let index;
   if (items.length > 1) {
-    index = partition(items, left, right);
+    index = division(items, left, right);
     if (left < index - 1) {
-      quickSort(items, left, index - 1);
+      sort(items, left, index - 1);
     }
     if (index < right) {
-      quickSort(items, index, right);
+      sort(items, index, right);
     }
   }
   return items;
 }
 
 function sortByAsc(arr) {
-  return quickSort(arr, 0, arr.length - 1);
+  return sort(arr, 0, arr.length - 1);
 }
 
 /**
@@ -521,7 +538,7 @@ function getNearestBigger(number) {
     return result;
   };
 
-  const sort = (array) => {
+  const sortMethod = (array) => {
     if (array.length <= 1) {
       return array;
     }
@@ -536,11 +553,11 @@ function getNearestBigger(number) {
         left1 = [...left1, array[p]];
       }
     }
-    return [...sort(left1), pivot, ...sort(right1)];
+    return [...sortMethod(left1), pivot, ...sortMethod(right1)];
   };
 
   let comb = getCombinations(arrCut);
-  comb = sort(comb.map((item) => item.join('')));
+  comb = sortMethod(comb.map((item) => item.join('')));
 
   let k = 0;
   let num = 0;
